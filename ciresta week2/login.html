@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TripZonne</title>
+    <style>
+        /* Styling for body, navbar, and form */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('header-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url("bg.jpg");
+        }
+
+        .login-form {
+            background: rgba(0, 51, 68, 0.8); 
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px; /* Slightly larger */
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #ffefd5;
+            font-size: 26px; /* Larger heading */
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #bde0ff;
+            font-size: 16px; /* Larger labels */
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 12px; /* Larger padding */
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px; /* Larger input text */
+            box-sizing: border-box;
+        }
+
+        .login-form input[type="email"], 
+        .login-form input[type="password"] {
+            background: #003c5e;
+            color: #fff;
+        }
+
+        .login-form input[type="submit"] {
+            background: #ff6347;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            padding: 12px;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .login-form input[type="submit"]:hover {
+            background: #ff4500;
+        }
+
+        .login-form .sign-up-link {
+            text-align: center;
+            margin-top: 10px;
+            color: #bde0ff;
+        }
+
+        .login-form .sign-up-link a {
+            color: #ffefd5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-form .sign-up-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: #ff4500;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none; /* Initially hidden */
+        }
+    </style>
+</head>
+<body>
+    <form class="login-form" id="loginForm">
+        <h2>Login to TripZonne</h2>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        <div class="error" id="emailError">Please enter a valid email address.</div>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+        <div class="error" id="passwordError">Password must be at least 8 characters long.</div>
+
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+        <div class="error" id="confirmPasswordError">Passwords do not match.</div>
+
+        <input type="submit" value="Login">
+        <div class="sign-up-link">
+            Already have an account? <a href="signup.html">Sign Up</a><br><br>
+            Wanna Update Profile?<a href="profile.html"> Update Profile</a>
+        </div>
+    </form>
+
+    <script>
+        // JavaScript for error handling
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            let isValid = true;
+
+            // Get form fields
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirm-password');
+
+            // Get error messages
+            const emailError = document.getElementById('emailError');
+            const passwordError = document.getElementById('passwordError');
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+            // Email Validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Standard email regex
+            if (!emailRegex.test(email.value)) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+
+            // Password Length Validation
+            if (password.value.length < 8) {
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else {
+                passwordError.style.display = 'none';
+            }
+
+            // Password Matching
+            if (password.value !== confirmPassword.value) {
+                confirmPasswordError.style.display = 'block';
+                isValid = false;
+            } else {
+                confirmPasswordError.style.display = 'none';
+            }
+
+            // Prevent form submission if there are validation errors
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

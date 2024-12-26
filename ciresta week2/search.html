@@ -1,0 +1,163 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Trips - TripZonne</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('header-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url("bg.jpg");
+        }
+
+        .search-form {
+            background: rgba(0, 51, 68, 0.8); 
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .search-form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffefd5; 
+            font-size: 28px;
+        }
+
+        .search-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #bde0ff;
+            font-size: 18px;
+        }
+
+        .search-form input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 12px;
+            box-sizing: border-box;
+            background: #003c5e; 
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .search-form input[type="submit"] {
+            background: #ff6347;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .search-form input[type="submit"]:hover {
+            background: #ff4500;
+        }
+
+        .results {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        .results h3 {
+            margin: 0 0 15px 0;
+        }
+
+        .results ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .results ul li {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <form class="search-form" id="searchForm">
+            <h2>Search Trips</h2>
+            <label for="departure">From - Departure City</label>
+            <input type="text" id="departure" name="departure" placeholder="Enter departure city" required>
+
+            <label for="destination">To - Destination</label>
+            <input type="text" id="destination" name="destination" placeholder="Enter destination" required>
+
+            <label for="travel-date">Travel Date</label>
+            <input type="date" id="travel-date" name="travel-date" required>
+
+            <input type="submit" value="Search">
+        </form>
+
+        <div class="results" id="results" style="display: none;">
+            <h3>Search Results</h3>
+            <ul id="resultsList"></ul>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form values
+            const departure = document.getElementById('departure').value.trim();
+            const destination = document.getElementById('destination').value.trim();
+            const travelDate = document.getElementById('travel-date').value;
+
+            // Dummy data for trips
+            const trips = [
+                { departure: "Mumbai", destination: "Goa", date: "2024-12-30" },
+                { departure: "Delhi", destination: "Jaipur", date: "2024-12-31" },
+                { departure: "Bangalore", destination: "Kerala", date: "2025-01-01" },
+                { departure: "Mumbai", destination: "Jaipur", date: "2024-12-29" }
+            ];
+
+            // Filter trips based on form values
+            const filteredTrips = trips.filter(trip =>
+                (departure === "" || trip.departure.toLowerCase() === departure.toLowerCase()) &&
+                (destination === "" || trip.destination.toLowerCase() === destination.toLowerCase()) &&
+                (travelDate === "" || trip.date === travelDate)
+            );
+
+            // Display results
+            const resultsDiv = document.getElementById('results');
+            const resultsList = document.getElementById('resultsList');
+            resultsList.innerHTML = ""; // Clear previous results
+
+            if (filteredTrips.length > 0) {
+                filteredTrips.forEach(trip => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `From: ${trip.departure}, To: ${trip.destination}, Date: ${trip.date}`;
+                    resultsList.appendChild(listItem);
+                });
+                resultsDiv.style.display = "block";
+            } else {
+                resultsList.innerHTML = "<li>No trips found matching your criteria.</li>";
+                resultsDiv.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
